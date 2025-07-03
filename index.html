@@ -5,19 +5,19 @@
 		    <title>Rust + Wasm Demo</title>
 	</head>
 	<body>
-		  <input id="name" type="text" placeholder="Enter your name" />
-		    <button id="greet">Greet</button>
+		<input id="name" type="text" placeholder="Enter your name" />
+		  <button id="greet">Greet</button>
 		      <p id="output"></p>
 		        <script type="module">
 				    import init, { greet } from "./pkg/ghost.js";
-				        async function run() {
-					      await init();
-					            document.getElementById('greet').onclick = () => {
-						            const name = document.getElementById('name').value;
-							            document.getElementById('output').textContent = greet(name);
-								          };
-									      }
-									          run();
-										    </script>
+				    async function run() {
+					await init();
+					    document.getElementById('greet').onclick = () => {
+						    const name = document.getElementById('name').value;
+							document.getElementById('output').textContent = greet(name);
+						};
+					}
+					run();
+				</script>
 	</body>
 </html>
