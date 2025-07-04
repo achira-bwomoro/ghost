@@ -1,38 +1,100 @@
-# Inventory Management System (Web-Based)
+# 🧾 SmartInventory
 
-A web-based inventory management system tailored for small businesses and retail stores, inspired by real-world experience as a Line Manager at GuardMart Supermarket.
+**SmartInventory** is a lightweight, web-based inventory management system designed for small retail businesses. It runs entirely in the browser using **Rust compiled to WebAssembly**, with a local **SQLite** backend for now. The system focuses on simple stock tracking, product management, and reporting — all without requiring a server or external API at this stage.
 
-## Features
+> 💡 Born out of real-world retail experience at GuardMart Supermarket, SmartInventory is designed to solve practical inventory challenges in a fast, offline-capable way.
 
-- **Product Catalog Management**: Add, edit, and delete products with ease.
-- **Stock Level Tracking**: Monitor inventory in real-time.
-- **Automated Reordering Alerts**: Receive notifications when stock runs low.
-- **Sales & Performance Reporting**: Generate reports on sales trends and product performance.
-- **User Authentication & Authorization**: Secure access for multiple user roles.
+---
 
-## Technology Stack
+## 📦 Features
 
-- **Frontend**: WebAssembly (using Rust for client-side logic)
-- **Backend**: Rust (using frameworks like Actix-web or Rocket)
-- **Database**: SurrealDB
+### 🛍️ Product Management
 
-## Getting Started
+- Add, edit, and delete products
+- Assign categories, barcodes, and supplier info
+- Basic search and filter functionality
 
-1. Clone the repository.
-2. Set up SurrealDB and configure your database connection.
-3. Build and run the Rust backend.
-4. Build and serve the WebAssembly frontend.
+### 📊 Stock Tracking
 
-## Why Rust, WebAssembly & SurrealDB?
+- Real-time inventory quantity tracking
+- View change history or movement logs
+- Optional: Support for product-level notes or expiry dates
 
-- **Rust**: Ensures high performance, safety, and reliability for backend and frontend logic.
-- **WebAssembly**: Enables running Rust code efficiently in the browser for a seamless web experience.
-- **SurrealDB**: A modern, scalable, and flexible database solution ideal for inventory data.
+### 🔔 Reorder Alerts
 
-## Contributing
+- Set low-stock thresholds
+- Simple dashboard alert when stock is low
 
-Contributions are welcome! Please open issues or submit pull requests for improvements.
+### 📈 Basic Reporting
 
-## License
+- View total product counts and stock value summaries
+- Track product performance over time
+- Optional: Export current stock data as CSV
 
-MIT License
+---
+
+## 🧪 Current Tech Stack
+
+| Layer        | Technology                                     |
+|--------------|------------------------------------------------|
+| **Frontend** | Rust compiled to WebAssembly via `wasm-pack`   |
+| **Database** | SQLite (local only for now)                    |
+| **Serve Tool** | [`serve`](https://www.npmjs.com/package/serve) |
+| **Styling**  | HTML and CSS (optional Tailwind)               |
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+
+- Rust and Cargo installed
+- [`wasm-pack`](https://rustwasm.github.io/wasm-pack/)
+- Node.js and `serve` (Install with `npm install -g serve`)
+
+### 2. Build the Project
+
+```bash
+wasm-pack build --target web
+```
+
+### 3. Serve the Application
+
+```bash
+serve -s ./pkg
+```
+
+---
+
+Then open your browser to the local address provided (e.g., <http://localhost:5000>).
+
+---
+
+## ❗ Current Limitations
+
+- No backend API or server logic implemented
+- No user authentication or access control
+- SQLite is used temporarily until SurrealDB integration is in place
+- Not optimized for large-scale inventory data
+
+---
+
+## 🧭 Future Plans
+
+- Migrate backend to SurrealDB for advanced features and relations
+- Implement user authentication and role-based access
+- Add RESTful API or WebSocket support
+- Enhance reporting with data visualization (charts, graphs)
+- Add support for mobile and offline usage via PWA
+
+---
+
+## 👨‍💼 About the Creator
+
+Jacob is a developer with practical experience managing inventory systems as a Line Manager at GuardMart Supermarket. He is using his real-world knowledge to build helpful, efficient tools using modern web technologies like Rust and WebAssembly.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
