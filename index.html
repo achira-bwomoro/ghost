@@ -1,86 +1,131 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		  <meta charset="utf-8"/>
-		    <title>Rust + Wasm Demo</title>
-			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<link rel="icon" href="./static/favicon.ico" />
-			<!-- load static files -->
-			<link rel="stylesheet" href="./static/style/index.css" />
-			<script src="./static/script/index.js" defer></script>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Ghost Inventory System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="./static/favicon.ico" />
+    <link rel="stylesheet" href="./static/style/index.css" />
+    <script src="./static/script/index.js" defer></script>
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#059669', // emerald-600
+              secondary: '#10b981', // emerald-500
+              accent: '#d1fae5', // emerald-100
+            },
+          },
+        },
+      }
+    </script>
+  </head>
+  <body class="bg-emerald-50 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+      <div class="container mx-auto flex items-center justify-between py-4 px-6">
+        <a href="#" class="text-3xl font-extrabold text-primary tracking-wide">Ghost Inventory</a>
+        <nav class="space-x-6">
+          <a href="#" class="text-gray-700 hover:text-primary font-medium">Home</a>
+          <a href="#" class="text-gray-700 hover:text-primary font-medium">Products</a>
+          <a href="#" class="text-gray-700 hover:text-primary font-medium">Reports</a>
+          <a href="#" class="text-gray-700 hover:text-primary font-medium">Settings</a>
+        </nav>
+      </div>
+    </header>
 
-			<!-- add tailwind cdn -->
-			<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-	</head>
-	<section>
-		<!--
-			Header section
-			A logo on the left and a menu on the right
-			Logo is a link to the home page
-			Menu has links to the home page, about page, and contact page
-			Header is sticky and has a background color
-			Header has a height of 60px and a padding of 10px
-			Header has a flexbox layout with items centered vertically
-			Header has a shadow effect
-			Header has a transition effect on hover
-			Header has a responsive design
-			Header has a dark mode support
-			Header has a light mode support
-			Header has a search bar
-			Header has a dropdown menu
-			Header has a login button
-			Header has a signup button
-			Header has a profile picture
-			Header has a notification icon
-			Header has a cart icon
-			Header has a language selector
-			Header has a theme selector
-			Header has a social media links
-		  -->
-		<header class="bg-white shadow-md sticky top-0 z-50">
-			<div class="container mx-auto flex items-center justify-between p-4">
-				<a href="/" class="text-2xl font-bold text-blue-600">Rust + Wasm Demo</a>
-				<nav class="space-x-4">
-					<a href="/" class="text-gray-700 hover:text-blue-600 transition duration-200">Home</a>
-					<a href="/about" class="text-gray-700 hover:text-blue-600 transition duration-200">About</a>
-					<a href="/contact" class="text-gray-700 hover:text-blue-600 transition duration-200">Contact</a>
-					<a href="/login" class="text-gray-700 hover:text-blue-600 transition duration-200">Login</a>
-					<a href="/signup" class="text-gray-700 hover:text-blue-600 transition duration-200">Sign Up</a>
-				</nav>
-			</div>
-	</section>
-	<body>
-		<div class="flex flex-col items-center justify-center min-h-screen bg-gray-100 space-y-6">
-			<input
-				id="name"
-				type="text"
-				placeholder="Enter your name"
-				class="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-64"
-			/>
-			<button
-				id="greet"
-				class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200"
-			>
-				Greet
-			</button>
-			<p id="output" class="text-lg text-gray-700"></p>
-			<p id="show-time" class="text-3xl font-bold underline text-blue-600"></p>
-		</div>
-		        <script type="module">
-				    import init, { greet, addition, current_time } from "./pkg/ghost.js";
-				    async function run() {
-					await init();
-					    document.getElementById('greet').onclick = () => {
-						    const name = document.getElementById('name').value;
-							document.getElementById('output').textContent = greet(name);
-							alert(addition(4, 5))
-						};
+    <!-- Main Content -->
+    <main class="flex-1 container mx-auto px-4 py-10">
+      <div class="bg-white rounded-xl shadow-lg p-8 max-w-4xl mx-auto">
+        <h1 class="text-2xl font-bold text-primary mb-6">Inventory Management</h1>
+        <!-- Product Form -->
+        <form id="product-form" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <input type="text" id="name" placeholder="Product Name" class="border border-emerald-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required />
+          <input type="text" id="barcode" placeholder="Barcode" class="border border-emerald-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required />
+          <input type="text" id="category" placeholder="Category" class="border border-emerald-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required />
+          <input type="text" id="subcategories" placeholder="Subcategories (comma separated)" class="border border-emerald-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" />
+          <input type="number" id="price" placeholder="Price" class="border border-emerald-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required step="0.01" min="0" />
+          <input type="number" id="quantity" placeholder="Quantity" class="border border-emerald-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required min="0" />
+          <input type="text" id="location" placeholder="Location in Shop" class="border border-emerald-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required />
+          <textarea id="description" placeholder="Description" class="border border-emerald-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary md:col-span-2"></textarea>
+          <button type="submit" class="bg-primary hover:bg-secondary text-white font-bold py-2 px-6 rounded transition duration-200 md:col-span-2">Add Product</button>
+        </form>
 
-						const now = current_time();
-						document.getElementById('show-time').textContent = `Current time: ${now}`;
+        <!-- Inventory Table -->
+        <div class="overflow-x-auto">
+          <table class="min-w-full bg-white rounded-lg shadow">
+            <thead class="bg-emerald-100">
+              <tr>
+                <th class="py-2 px-4 text-left text-emerald-700">Name</th>
+                <th class="py-2 px-4 text-left text-emerald-700">Barcode</th>
+                <th class="py-2 px-4 text-left text-emerald-700">Category</th>
+                <th class="py-2 px-4 text-left text-emerald-700">Subcategories</th>
+                <th class="py-2 px-4 text-left text-emerald-700">Price</th>
+                <th class="py-2 px-4 text-left text-emerald-700">Qty</th>
+                <th class="py-2 px-4 text-left text-emerald-700">Location</th>
+                <th class="py-2 px-4 text-left text-emerald-700">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inventory-table" class="divide-y divide-emerald-100">
+              <!-- Dynamic rows go here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
 
-					}
-					run();
-				</script>
-	</body>
+    <!-- Footer -->
+    <footer class="bg-white text-center text-emerald-700 py-4 mt-10 shadow-inner">
+      &copy; 2025 Ghost Inventory. All rights reserved.
+    </footer>
+
+    <script>
+      // Example JS for dynamic table (replace with WASM/real backend logic)
+      const form = document.getElementById('product-form');
+      const table = document.getElementById('inventory-table');
+      let products = [];
+      form.onsubmit = (e) => {
+        e.preventDefault();
+        const product = {
+          name: form.name.value,
+          barcode: form.barcode.value,
+          category: form.category.value,
+          subcategories: form.subcategories.value,
+          price: form.price.value,
+          quantity: form.quantity.value,
+          location: form.location.value,
+          description: form.description.value
+        };
+        products.push(product);
+        renderTable();
+        form.reset();
+      };
+      function renderTable() {
+        table.innerHTML = '';
+        products.forEach((p, i) => {
+          table.innerHTML += `
+            <tr class="hover:bg-emerald-50">
+              <td class="py-2 px-4">${p.name}</td>
+              <td class="py-2 px-4">${p.barcode}</td>
+              <td class="py-2 px-4">${p.category}</td>
+              <td class="py-2 px-4">${p.subcategories}</td>
+              <td class="py-2 px-4">$${parseFloat(p.price).toFixed(2)}</td>
+              <td class="py-2 px-4">${p.quantity}</td>
+              <td class="py-2 px-4">${p.location}</td>
+              <td class="py-2 px-4">
+                <button onclick="deleteProduct(${i})" class="text-red-600 hover:underline">Delete</button>
+              </td>
+            </tr>
+          `;
+        });
+      }
+      window.deleteProduct = function(i) {
+        products.splice(i, 1);
+        renderTable();
+      };
+    </script>
+  </body>
 </html>
