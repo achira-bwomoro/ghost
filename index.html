@@ -1,131 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Ghost Inventory System</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="./static/favicon.ico" />
-    <link rel="stylesheet" href="./static/style/index.css" />
-    <script src="./static/script/index.js" defer></script>
-    <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: '#059669', // emerald-600
-              secondary: '#10b981', // emerald-500
-              accent: '#d1fae5', // emerald-100
-            },
-          },
-        },
-      }
-    </script>
-  </head>
-  <body class="bg-emerald-50 min-h-screen flex flex-col">
-    <!-- Header -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
-      <div class="container mx-auto flex items-center justify-between py-4 px-6">
-        <a href="#" class="text-3xl font-extrabold text-primary tracking-wide">Ghost Inventory</a>
-        <nav class="space-x-6">
-          <a href="#" class="text-gray-700 hover:text-primary font-medium">Home</a>
-          <a href="#" class="text-gray-700 hover:text-primary font-medium">Products</a>
-          <a href="#" class="text-gray-700 hover:text-primary font-medium">Reports</a>
-          <a href="#" class="text-gray-700 hover:text-primary font-medium">Settings</a>
-        </nav>
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <title>Rust WASM Inventory Example</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center py-8"></body>
+  <h1 class="text-3xl font-bold mb-8 text-blue-700">Rust WASM Inventory Example</h1>
+  <div class="bg-white shadow rounded p-6 mb-6 w-full max-w-md">
+    <div class="flex items-center space-x-2 mb-4">
+      <input id="name" type="text" placeholder="Enter your name" class="input input-bordered w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <button onclick="greetUser()" class="btn bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Greet</button>
+    </div>
+    <p id="greet-result" class="text-green-700 font-semibold"></p>
+  </div>
+  <div class="bg-white shadow rounded p-6 mb-6 w-full max-w-md">
+    <div class="flex items-center space-x-2 mb-4">
+      <input id="add-a" type="number" placeholder="A" class="input input-bordered w-1/2 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="add-b" type="number" placeholder="B" class="input input-bordered w-1/2 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <button onclick="addNumbers()" class="btn bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add</button>
+    </div>
+    <p id="add-result" class="text-green-700 font-semibold"></p>
+  </div>
+  <!-- Create Inventory Item -->
+  <div class="bg-white shadow rounded p-6 mb-6 w-full max-w-md">
+    <h2 class="text-xl font-semibold mb-4 text-gray-700">Create Inventory Item</h2>
+    <div class="flex flex-col space-y-2 mb-4">
+      <input id="item-id" type="text" placeholder="Item ID" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="item-name" type="text" placeholder="Name" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="item-description" type="text" placeholder="Description" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="item-category" type="text" placeholder="Category" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="item-qty" type="number" placeholder="Quantity" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="item-unit-price" type="number" step="0.01" placeholder="Unit Price" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="item-total-value" type="number" step="0.01" placeholder="Total Value" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="item-supplier" type="text" placeholder="Supplier" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="item-sku" type="text" placeholder="SKU" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="item-location" type="text" placeholder="Location" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="item-reorder-level" type="number" placeholder="Reorder Level" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="item-expiration-date" type="text" placeholder="Expiration Date (optional)" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="item-weight" type="number" step="0.01" placeholder="Weight (optional)" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="item-dimensions-l" type="number" step="0.01" placeholder="Length (optional)" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="item-dimensions-w" type="number" step="0.01" placeholder="Width (optional)" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="item-dimensions-h" type="number" step="0.01" placeholder="Height (optional)" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="item-condition" type="text" placeholder="Condition" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="item-barcode" type="text" placeholder="Barcode (optional)" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+    </div>
+    <button onclick="createItem()" class="btn bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Create</button>
+    <pre id="create-result" class="bg-gray-100 mt-4 p-2 rounded text-sm"></pre>
+  </div>
+  <!-- Read Inventory Item -->
+  <div class="bg-white shadow rounded p-6 mb-6 w-full max-w-md">
+    <h2 class="text-xl font-semibold mb-4 text-gray-700">Read Inventory Item</h2>
+    <div class="flex items-center space-x-2 mb-4">
+      <input id="read-id" type="text" placeholder="ID" class="input input-bordered w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <button onclick="readItem()" class="btn bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Read</button>
+    </div>
+    <pre id="read-result" class="bg-gray-100 mt-2 p-2 rounded text-sm"></pre>
+  </div>
+  <!-- Update Inventory Item -->
+  <div class="bg-white shadow rounded p-6 mb-6 w-full max-w-md">
+    <h2 class="text-xl font-semibold mb-4 text-gray-700">Update Inventory Item</h2>
+    <div class="flex flex-col space-y-2 mb-4">
+      <input id="update-id" type="text" placeholder="Item ID" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="update-name" type="text" placeholder="Name" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="update-description" type="text" placeholder="Description" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="update-category" type="text" placeholder="Category" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="update-qty" type="number" placeholder="Quantity" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="update-unit-price" type="number" step="0.01" placeholder="Unit Price" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="update-total-value" type="number" step="0.01" placeholder="Total Value" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="update-supplier" type="text" placeholder="Supplier" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="update-sku" type="text" placeholder="SKU" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="update-location" type="text" placeholder="Location" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="update-reorder-level" type="number" placeholder="Reorder Level" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="update-expiration-date" type="text" placeholder="Expiration Date (optional)" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="update-weight" type="number" step="0.01" placeholder="Weight (optional)" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="update-dimensions-l" type="number" step="0.01" placeholder="Length (optional)" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="update-dimensions-w" type="number" step="0.01" placeholder="Width (optional)" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="update-dimensions-h" type="number" step="0.01" placeholder="Height (optional)" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="update-condition" type="text" placeholder="Condition" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <input id="update-barcode" type="text" placeholder="Barcode (optional)" class="input input-bordered px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+    </div>
+    <button onclick="updateItem()" class="btn bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700">Update</button>
+    <pre id="update-result" class="bg-gray-100 mt-4 p-2 rounded text-sm"></pre>
+  </div>
+  <!-- Delete Inventory Item -->
+  <div class="bg-white shadow rounded p-6 mb-6 w-full max-w-md">
+    <h2 class="text-xl font-semibold mb-4 text-gray-700">Delete Inventory Item</h2>
+    <div class="flex items-center space-x-2 mb-4">
+      <input id="delete-id" type="text" placeholder="ID" class="input input-bordered w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <button onclick="deleteItem()" class="btn bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Delete</button>
+    </div>
+    <pre id="delete-result" class="bg-gray-100 mt-2 p-2 rounded text-sm"></pre>
+  </div>
+  <script type="module">
+    import init, * as wasm from './pkg/ghost.js';
 
-    <!-- Main Content -->
-    <main class="flex-1 container mx-auto px-4 py-10">
-      <div class="bg-white rounded-xl shadow-lg p-8 max-w-4xl mx-auto">
-        <h1 class="text-2xl font-bold text-primary mb-6">Inventory Management</h1>
-        <!-- Product Form -->
-        <form id="product-form" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <input type="text" id="name" placeholder="Product Name" class="border border-emerald-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required />
-          <input type="text" id="barcode" placeholder="Barcode" class="border border-emerald-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required />
-          <input type="text" id="category" placeholder="Category" class="border border-emerald-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required />
-          <input type="text" id="subcategories" placeholder="Subcategories (comma separated)" class="border border-emerald-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" />
-          <input type="number" id="price" placeholder="Price" class="border border-emerald-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required step="0.01" min="0" />
-          <input type="number" id="quantity" placeholder="Quantity" class="border border-emerald-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required min="0" />
-          <input type="text" id="location" placeholder="Location in Shop" class="border border-emerald-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required />
-          <textarea id="description" placeholder="Description" class="border border-emerald-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary md:col-span-2"></textarea>
-          <button type="submit" class="bg-primary hover:bg-secondary text-white font-bold py-2 px-6 rounded transition duration-200 md:col-span-2">Add Product</button>
-        </form>
+    async function main() {
+      await init();
 
-        <!-- Inventory Table -->
-        <div class="overflow-x-auto">
-          <table class="min-w-full bg-white rounded-lg shadow">
-            <thead class="bg-emerald-100">
-              <tr>
-                <th class="py-2 px-4 text-left text-emerald-700">Name</th>
-                <th class="py-2 px-4 text-left text-emerald-700">Barcode</th>
-                <th class="py-2 px-4 text-left text-emerald-700">Category</th>
-                <th class="py-2 px-4 text-left text-emerald-700">Subcategories</th>
-                <th class="py-2 px-4 text-left text-emerald-700">Price</th>
-                <th class="py-2 px-4 text-left text-emerald-700">Qty</th>
-                <th class="py-2 px-4 text-left text-emerald-700">Location</th>
-                <th class="py-2 px-4 text-left text-emerald-700">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="inventory-table" class="divide-y divide-emerald-100">
-              <!-- Dynamic rows go here -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </main>
+      window.greetUser = () => {
+        const name = document.getElementById('name').value;
+        document.getElementById('greet-result').textContent = wasm.greet(name);
+      };
 
-    <!-- Footer -->
-    <footer class="bg-white text-center text-emerald-700 py-4 mt-10 shadow-inner">
-      &copy; 2025 Ghost Inventory. All rights reserved.
-    </footer>
+      window.addNumbers = () => {
+        const a = parseInt(document.getElementById('add-a').value, 10);
+        const b = parseInt(document.getElementById('add-b').value, 10);
+        document.getElementById('add-result').textContent = wasm.addition(a, b);
+      };
 
-    <script>
-      // Example JS for dynamic table (replace with WASM/real backend logic)
-      const form = document.getElementById('product-form');
-      const table = document.getElementById('inventory-table');
-      let products = [];
-      form.onsubmit = (e) => {
-        e.preventDefault();
-        const product = {
-          name: form.name.value,
-          barcode: form.barcode.value,
-          category: form.category.value,
-          subcategories: form.subcategories.value,
-          price: form.price.value,
-          quantity: form.quantity.value,
-          location: form.location.value,
-          description: form.description.value
+      window.createItem = async () => {
+        const item = {
+          item_id: document.getElementById('item-id').value,
+          name: document.getElementById('item-name').value,
+          description: document.getElementById('item-description').value,
+          category: document.getElementById('item-category').value,
+          quantity: parseInt(document.getElementById('item-qty').value, 10),
+          unit_price: parseFloat(document.getElementById('item-unit-price').value),
+          total_value: parseFloat(document.getElementById('item-total-value').value),
+          supplier: document.getElementById('item-supplier').value,
+          sku: document.getElementById('item-sku').value,
+          location: document.getElementById('item-location').value,
+          reorder_level: parseInt(document.getElementById('item-reorder-level').value, 10),
+          expiration_date: document.getElementById('item-expiration-date').value || null,
+          weight: document.getElementById('item-weight').value ? parseFloat(document.getElementById('item-weight').value) : null,
+          dimensions: (
+            document.getElementById('item-dimensions-l').value &&
+            document.getElementById('item-dimensions-w').value &&
+            document.getElementById('item-dimensions-h').value
+          ) ? [
+            parseFloat(document.getElementById('item-dimensions-l').value),
+            parseFloat(document.getElementById('item-dimensions-w').value),
+            parseFloat(document.getElementById('item-dimensions-h').value)
+          ] : null,
+          condition: document.getElementById('item-condition').value,
+          barcode: document.getElementById('item-barcode').value || null,
         };
-        products.push(product);
-        renderTable();
-        form.reset();
+        try {
+          const result = await wasm.create_inventory_item(item);
+          document.getElementById('create-result').textContent = JSON.stringify(result, null, 2);
+        } catch (e) {
+          document.getElementById('create-result').textContent = e;
+        }
       };
-      function renderTable() {
-        table.innerHTML = '';
-        products.forEach((p, i) => {
-          table.innerHTML += `
-            <tr class="hover:bg-emerald-50">
-              <td class="py-2 px-4">${p.name}</td>
-              <td class="py-2 px-4">${p.barcode}</td>
-              <td class="py-2 px-4">${p.category}</td>
-              <td class="py-2 px-4">${p.subcategories}</td>
-              <td class="py-2 px-4">$${parseFloat(p.price).toFixed(2)}</td>
-              <td class="py-2 px-4">${p.quantity}</td>
-              <td class="py-2 px-4">${p.location}</td>
-              <td class="py-2 px-4">
-                <button onclick="deleteProduct(${i})" class="text-red-600 hover:underline">Delete</button>
-              </td>
-            </tr>
-          `;
-        });
-      }
-      window.deleteProduct = function(i) {
-        products.splice(i, 1);
-        renderTable();
+
+      window.readItem = async () => {
+        const id = document.getElementById('read-id').value;
+        try {
+          const result = await wasm.read_inventory_item(id);
+          document.getElementById('read-result').textContent = JSON.stringify(result, null, 2);
+        } catch (e) {
+          document.getElementById('read-result').textContent = e;
+        }
       };
-    </script>
-  </body>
+
+      window.updateItem = async () => {
+        const item = {
+          item_id: document.getElementById('update-id').value,
+          name: document.getElementById('update-name').value,
+          description: document.getElementById('update-description').value,
+          category: document.getElementById('update-category').value,
+          quantity: parseInt(document.getElementById('update-qty').value, 10),
+          unit_price: parseFloat(document.getElementById('update-unit-price').value),
+          total_value: parseFloat(document.getElementById('update-total-value').value),
+          supplier: document.getElementById('update-supplier').value,
+          sku: document.getElementById('update-sku').value,
+          location: document.getElementById('update-location').value,
+          reorder_level: parseInt(document.getElementById('update-reorder-level').value, 10),
+          expiration_date: document.getElementById('update-expiration-date').value || null,
+          weight: document.getElementById('update-weight').value ? parseFloat(document.getElementById('update-weight').value) : null,
+          dimensions: (
+            document.getElementById('update-dimensions-l').value &&
+            document.getElementById('update-dimensions-w').value &&
+            document.getElementById('update-dimensions-h').value
+          ) ? [
+            parseFloat(document.getElementById('update-dimensions-l').value),
+            parseFloat(document.getElementById('update-dimensions-w').value),
+            parseFloat(document.getElementById('update-dimensions-h').value)
+          ] : null,
+          condition: document.getElementById('update-condition').value,
+          barcode: document.getElementById('update-barcode').value || null,
+        };
+        try {
+          const result = await wasm.update_inventory_item(item);
+          document.getElementById('update-result').textContent = JSON.stringify(result, null, 2);
+        } catch (e) {
+          document.getElementById('update-result').textContent = e;
+        }
+      };
+
+      window.deleteItem = async () => {
+        const id = document.getElementById('delete-id').value;
+        try {
+          const result = await wasm.delete_inventory_item(id);
+          document.getElementById('delete-result').textContent = result;
+        } catch (e) {
+          document.getElementById('delete-result').textContent = e;
+        }
+      };
+    }
+
+    main();
+  </script>
+</body>
 </html>

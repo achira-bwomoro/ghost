@@ -1,0 +1,5 @@
+#V2
+DEFINE CONFIG GRAPHQL AUTO;
+CREATE person SET name = "Alice", age = 25;
+CREATE inventory_item SET\n    item_id = "item-001",\n    name = "Sample Widget",\n    description = "A sample inventory item",\n    category = "Widgets",\n    quantity = 100,\n    unit_price = 9.99,\n    total_value = 999.0,\n    supplier = "Acme Corp",\n    sku = "SW-100",\n    location = "Aisle 1",\n    reorder_level = 10,\n    expiration_date = "2025-12-31",\n    weight = 1.5,\n    dimensions = [10, 5, 2],\n    condition = "new",\n    barcode = "1234567890123";
+DEFINE CONFIG GRAPHQL AUTO;
