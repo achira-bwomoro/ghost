@@ -11,7 +11,7 @@
 ### 🛍️ Product Management
 
 - Add, edit, and delete products
-- Assign categories, barcodes, and supplier info
+- Assign categories, barcode, and supplier info
 - Basic search and filter functionality
 
 ### 📊 Stock Tracking
@@ -74,14 +74,12 @@ Then open your browser to the local address provided (e.g., <http://localhost:50
 
 - No backend API or server logic implemented
 - No user authentication or access control
-- SQLite is used temporarily until SurrealDB integration is in place
 - Not optimized for large-scale inventory data
 
 ---
 
 ## 🧭 Future Plans
 
-- Migrate backend to SurrealDB for advanced features and relations
 - Implement user authentication and role-based access
 - Add RESTful API or WebSocket support
 - Enhance reporting with data visualization (charts, graphs)
